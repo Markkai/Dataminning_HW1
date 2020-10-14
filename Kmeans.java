@@ -21,7 +21,7 @@ public class Kmeans {
         StringTokenizer tokenizer = new StringTokenizer(line);
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            if(token == "")
+            if(token == "大里,PM2.5")
             word.set(tokenizer.nextToken());
             context.write(word, one);
         }
