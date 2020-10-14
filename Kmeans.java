@@ -37,7 +37,7 @@ public class Kmeans {
         context.write(key, new IntWritable(sum));
     }
  }
-/*
+
 public static class SortMap extends Mapper<LongWritable, Text, IntWritable, Text>{
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException{
                 String line = value.toString();
@@ -55,7 +55,7 @@ public static class SortReduce extends Reducer<IntWritable, Text, IntWritable, T
                 }
         }
 }
-*/
+
 
 
 public static void main(String[] args) throws Exception {
