@@ -12,6 +12,56 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class Kmeans {
 
+ public static class KM_Map extends Mapper<LongWritable, Text, Text, IntWritable> {
+    private List<String> centerID = new ArrayList<>();
+    private List(Integer) centerValue = new ArrayList();
+    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        String line = value.toString();
+        StringTokenizer tokenizer = new StringTokenizer(line);
+        String new_key = tokenizer.nextToken();
+
+        // 群中心ID
+        centerID.add("K1");
+        centerID.add("K2");
+        centerID.add("K3");
+        centerID.add("K4");
+        // Random 給4中心點
+        centerValue.add(20);
+        centerValue.add(30);
+        centerValue.add(50);
+        centerValue.add(70);
+        while(tokenizer.hasMoreTokens()){
+            String token = tokenizer.nextToken();
+            int new_value = Integer.parseInt(token);
+            List<Double> list_distance = new ArrayList<>();
+
+            // 算距離
+            for(int i =0; i< centerValue.size(); i++){
+                double distance = Math.abs(new_value - centerValue.get(i));
+                list_distance.add(distance);
+            }
+            // 找出最近中心點並分類
+            for(int i= 0; i< centerValue.size(); i++){
+                if(Collections.min(list_distance) == Math.abs(new_value - centerValue.get(i))){
+                    context.write(new Text(centerID.get(i)), new IntWritable(new_value));
+                }
+            }
+        }
+    }
+ }
+ public static class KM_Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+    private int sum = 0;
+    private int count = 0;
+    public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        for (IntWritable val : values) {
+            sum += val.get();
+            count++;
+        }
+        // 取得該類中心點
+        context.write(key, new IntWritable(sum/count));
+    }
+ }
+/*
  public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
         private final static IntWritable one = new IntWritable(1);
         private Text word = new Text();
@@ -21,32 +71,12 @@ public class Kmeans {
         StringTokenizer tokenizer = new StringTokenizer(line);
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            if(token == "大里,PM2.5")
+            if(token == "")
             word.set(tokenizer.nextToken());
             context.write(word, one);
         }
     }
  }
- public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
-
-    public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-        int sum = 0;
-        for (IntWritable val : values) {
-            sum += val.get();
-        }
-        context.write(key, new IntWritable(sum));
-    }
- }
-/*
-public static class SortMap extends Mapper<LongWritable, Text, IntWritable, Text>{
-        public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException{
-                String line = value.toString();
-                StringTokenizer tokenizer = new StringTokenizer(line);
-                String token1 = tokenizer.nextToken();
-                String token2 = tokenizer.nextToken();
-                context.write(new IntWritable(Integer.parseInt(token2)), new Text(token1));
-        }
-}
 
 public static class SortReduce extends Reducer<IntWritable, Text, IntWritable, Text>{
         public void reduce(IntWritable key, Iterable<Text> values, Context context) throws IOException, InterruptedException{
@@ -60,14 +90,14 @@ public static class SortReduce extends Reducer<IntWritable, Text, IntWritable, T
 
 public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();                                                                                                                                
-        Job job = new Job(conf, "wordcount");
+    Job job = new Job(conf, "Kmeans");
 
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(IntWritable.class);
 
-    job.setMapperClass(Map.class);
-    job.setReducerClass(Reduce.class);
-    job.setJarByClass(WordCount.class);
+    job.setMapperClass(KM_Map.class);
+    job.setReducerClass(KM_Reduce.class);
+    job.setJarByClass(Kmeans.class);
 
     job.setInputFormatClass(TextInputFormat.class);
     job.setOutputFormatClass(TextOutputFormat.class);
