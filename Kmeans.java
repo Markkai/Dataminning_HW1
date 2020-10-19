@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class Kmeans {
-
+ boolean flag = true;
  public List Fir_cent(){
     List<Integer> centerValue = new ArrayList<>();
     // Random 給4中心點
@@ -144,9 +144,6 @@ public static class SortReduce extends Reducer<IntWritable, Text, IntWritable, T
 
 
 public static void main(String[] args) throws Exception {
-
-    boolean flag = true;
-    
 
     Configuration conf = new Configuration();                                                                                                                                
     Job job = new Job(conf, "Kmeans");
