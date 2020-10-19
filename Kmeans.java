@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class Kmeans {
  boolean flag = true;
-  HashMap<String, Integer> 4K = new HashMap<String, Integer>();
+ HashMap<String, Integer> 4K = new HashMap<String, Integer>();
 
  public List Fir_cent(){
     List(Integer) centerValue = new ArrayList();
@@ -80,7 +80,7 @@ public class Kmeans {
             count++;
             }
             // 取得該類中心點
-            float new_cent = sum/count
+            float new_cent = sum/count;
             4K.put("K1", new_cent);
         }
         else if(key == "K2"){
@@ -89,7 +89,7 @@ public class Kmeans {
             count++;
             }
             // 取得該類中心點
-            float new_cent = sum/count
+            float new_cent = sum/count;
             4K.put("K2", new_cent);
         }
         else if(key == "K3"){
@@ -98,7 +98,7 @@ public class Kmeans {
             count++;
             }
             // 取得該類中心點
-            float new_cent = sum/count
+            float new_cent = sum/count;
             4K.put("K3", new_cent);
         }
         else if(key == "K4"){
@@ -107,7 +107,7 @@ public class Kmeans {
             count++;
             }
             // 取得該類中心點
-            float new_cent = sum/count
+            float new_cent = sum/count;
             4K.put("K4", new_cent);
         }
         System.out.println(4K);
