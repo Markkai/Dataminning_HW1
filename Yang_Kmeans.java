@@ -19,7 +19,7 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-public class Kmeans {
+public class Yang_Kmeans {
 
 
     public static class DefultMap extends Mapper<LongWritable, Text, Text, IntWritable> {
@@ -149,13 +149,13 @@ public class Kmeans {
         // K3 00(數值)
         // .....
         Configuration conf = new Configuration();
-        conf.set("Kmeans",String.valueOf(k));
+        conf.set("Yang_Kmeans",String.valueOf(k));
         Job job = new Job(conf, "DefuleKmeans");
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         job.setMapperClass(DefultMap.class);
         job.setReducerClass(DefultReduce.class);
-        job.setJarByClass(Kmeans.class);
+        job.setJarByClass(Yang_Kmeans.class);
         job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(TextOutputFormat.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));
@@ -208,12 +208,12 @@ public class Kmeans {
             }
 
             System.out.println("Kjob開始");
-            Job kjob = new Job(conf, "Kmeans");
+            Job kjob = new Job(conf, "Yang_Kmeans");
             kjob.setOutputKeyClass(Text.class);
             kjob.setOutputValueClass(IntWritable.class);
             kjob.setMapperClass(KMap.class);
             kjob.setReducerClass(KReduce.class);
-            kjob.setJarByClass(Kmeans.class);
+            kjob.setJarByClass(Yang_Kmeans.class);
             kjob.setInputFormatClass(TextInputFormat.class);
             kjob.setOutputFormatClass(TextOutputFormat.class);
             FileInputFormat.addInputPath(kjob, new Path(args[0]));
