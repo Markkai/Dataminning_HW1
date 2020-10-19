@@ -94,10 +94,10 @@ public class Yang_Kmeans {
 
         while (tokenizer.hasMoreTokens()) {
             String token1 = tokenizer.nextToken(); 
-            String token2= tokenizer.nextToken(); 
-            String token3 = tokenizer.nextToken(); 
+           // String token2= tokenizer.nextToken(); 
+           // String token3 = tokenizer.nextToken(); 
 
-            int new_value = Integer.parseInt(token3);
+            int new_value = Integer.parseInt(token1);
 
             List<Double> list_distances = new ArrayList<>();
 
