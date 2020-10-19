@@ -18,7 +18,7 @@ public class Kmeans {
     private List<Integer> centerValue = new ArrayList<>();
 
 
-    public void setup(Contex contex){
+    public void setup(Mapper<LongWritable, Text, Text, IntWritable>.Contex contex) throws IOException, InterruptedException{
 
         // Random 給4中心點
         centerValue.add(20);
