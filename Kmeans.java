@@ -61,7 +61,7 @@ public class Kmeans {
         for(String id : keySet2){
             values = Kx_values.get(id);
             for(int i= 0; i< values.size(); i++){
-                context.write(new Text(id)), new IntWritable(i));
+                context.write(new Text(id), new IntWritable(i));
             }
         }
     }
