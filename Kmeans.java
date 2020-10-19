@@ -14,8 +14,7 @@ public class Kmeans {
 
  public static class KM_Map extends Mapper<LongWritable, Text, Text, IntWritable> {
 
-    protected void setup(Mapper<LongWritable, Text, Text, IntWritable>.Context context) throws IOException, InterruptedException{
-
+    protected void setup(Context context) throws IOException, InterruptedException{
      // Random 給4中心點 & 群中心ID
     HashMap<String, Integer> map_4k = new HashMap<String, Integer>();
     map_4k.put("K1", 20);
@@ -23,7 +22,7 @@ public class Kmeans {
     map_4k.put("K3", 50);
     map_4k.put("K4", 70);
 
-    HashMap<String, List> Kx_values = new HashMap<String, Integer>();
+    HashMap<String, List> Kx_values = new HashMap<String, List>();
   }
 
    // private List<String> centerID = new ArrayList<>();
@@ -39,7 +38,7 @@ public class Kmeans {
             List<Double> list_distance = new ArrayList<>();
 
             Set<String> keySet = map_4k.keySet();
-            // 算距離
+            // 第一個值和 K1,2,3,4 算距離找最小
             for(String id : keySet){ 
                 double distance = Math.abs(new_value - map_4k.get(id));
                 list_distance.add(distance);
@@ -54,7 +53,7 @@ public class Kmeans {
         }
     }
 
-    protected void cleanup(Mapper<LongWritable, Text, Text, IntWritable>.Context context) throws IOException, InterruptedException{
+    protected void cleanup(Context context) throws IOException, InterruptedException{
         Set<String> keySet2 = Kx_values.keySet();
         List<Integer> values = new ArrayList<>();
 
@@ -65,9 +64,8 @@ public class Kmeans {
             }
         }
     }
-
-
  }
+
  public static class KM_Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
     private int sum = 0;
     private int count = 0;
