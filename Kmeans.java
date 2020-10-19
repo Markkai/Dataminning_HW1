@@ -110,7 +110,6 @@ public static void main(String[] args) throws Exception {
     FileOutputFormat.setOutputPath(job, new Path(args[2]));
     job2.waitForCompletion(true);
 */
-    }
 }
 
 
