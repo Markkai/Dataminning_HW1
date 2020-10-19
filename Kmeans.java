@@ -11,17 +11,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class Kmeans {
- boolean flag = true;
- public List Fir_cent(){
-    List<Integer> centerValue = new ArrayList<>();
-    // Random 給4中心點
-    centerValue.add(20);
-    centerValue.add(30);
-    centerValue.add(50);
-    centerValue.add(70);
-    flag = false;
-    return centerValue;
- }
+ 
 
  public static class KM_Map extends Mapper<LongWritable, Text, Text, IntWritable> {
     private List<String> centerID = new ArrayList<>();
@@ -31,7 +21,13 @@ public class Kmeans {
         String line = value.toString();
         StringTokenizer tokenizer = new StringTokenizer(line);
         String new_key = tokenizer.nextToken();
-        
+       
+        // Random 給4中心點
+        centerValue.add(20);
+        centerValue.add(30);
+        centerValue.add(50);
+        centerValue.add(70);
+
         // 群中心ID
         centerID.add("K1");
         centerID.add("K2");
@@ -144,7 +140,7 @@ public static class SortReduce extends Reducer<IntWritable, Text, IntWritable, T
 
 
 public static void main(String[] args) throws Exception {
-
+    
     Configuration conf = new Configuration();                                                                                                                                
     Job job = new Job(conf, "Kmeans");
 
