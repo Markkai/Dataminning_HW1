@@ -11,38 +11,58 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class Kmeans {
+ boolean flag = true;
+ HashMap<String, Integer> 4K = new HashMapM();
+
+ public List Fir_cent(){
+    List(Integer) centerValue = new ArrayList();
+    // Random 給4中心點
+    centerValue.add(20);
+    centerValue.add(30);
+    centerValue.add(50);
+    centerValue.add(70);
+    flag = false;
+    return centerValue;
+ }
+
 
  public static class KM_Map extends Mapper<LongWritable, Text, Text, IntWritable> {
     private List<String> centerID = new ArrayList<>();
     private List(Integer) centerValue = new ArrayList();
+
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String line = value.toString();
         StringTokenizer tokenizer = new StringTokenizer(line);
         String new_key = tokenizer.nextToken();
-
+        
         // 群中心ID
         centerID.add("K1");
         centerID.add("K2");
         centerID.add("K3");
         centerID.add("K4");
-        // Random 給4中心點
-        centerValue.add(20);
-        centerValue.add(30);
-        centerValue.add(50);
-        centerValue.add(70);
+
+        if(flag == true){
+            4K.put("K1", 20);
+            4K.put("K2", 30);
+            4K.put("K3", 50);
+            4K.put("K4", 70);
+            centerValue = Fir_cent();
+        }
+
         while(tokenizer.hasMoreTokens()){
             String token = tokenizer.nextToken();
             int new_value = Integer.parseInt(token);
             List<Double> list_distance = new ArrayList<>();
-
+            
             // 算距離
-            for(int i =0; i< centerValue.size(); i++){
+            for(int i =0; i< centerValue.size(); i++){ 
                 double distance = Math.abs(new_value - centerValue.get(i));
                 list_distance.add(distance);
             }
             // 找出最近中心點並分類
             for(int i= 0; i< centerValue.size(); i++){
                 if(Collections.min(list_distance) == Math.abs(new_value - centerValue.get(i))){
+                    
                     context.write(new Text(centerID.get(i)), new IntWritable(new_value));
                 }
             }
@@ -53,14 +73,49 @@ public class Kmeans {
     private int sum = 0;
     private int count = 0;
     public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-        for (IntWritable val : values) {
+        
+        if(key == "K1"){
+            for (IntWritable val : values) {
             sum += val.get();
             count++;
+            }
+            // 取得該類中心點
+            float new_cent = sum/count
+            4K.put("K1", new_cent);
         }
-        // 取得該類中心點
+        else if(key == "K2"){
+            for (IntWritable val : values) {
+            sum += val.get();
+            count++;
+            }
+            // 取得該類中心點
+            float new_cent = sum/count
+            4K.put("K2", new_cent);
+        }
+        else if(key == "K3"){
+            for (IntWritable val : values) {
+            sum += val.get();
+            count++;
+            }
+            // 取得該類中心點
+            float new_cent = sum/count
+            4K.put("K3", new_cent);
+        }
+        else if(key == "K4"){
+            for (IntWritable val : values) {
+            sum += val.get();
+            count++;
+            }
+            // 取得該類中心點
+            float new_cent = sum/count
+            4K.put("K4", new_cent);
+        }
+        System.out.println(4K);
         context.write(key, new IntWritable(sum/count));
     }
  }
+
+
 /*
  public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
         private final static IntWritable one = new IntWritable(1);
@@ -126,9 +181,7 @@ public static void main(String[] args) throws Exception {
     FileOutputFormat.setOutputPath(job, new Path(args[2]));
     job2.waitForCompletion(true);
 */
-
     }
-
 }
 
 
