@@ -12,14 +12,18 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class Kmeans {
 
-
  public static class KM_Map extends Mapper<LongWritable, Text, Text, IntWritable> {
     private List<String> centerID = new ArrayList<>();
     private List<Integer> centerValue = new ArrayList<>();
 
+    // public void setup(Mapper<LongWritable, Text, Text, IntWritable>.Contex contex) throws IOException, InterruptedException{
 
-    public void setup(Mapper<LongWritable, Text, Text, IntWritable>.Contex contex) throws IOException, InterruptedException{
 
+    // }
+
+    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        String line = value.toString();
+        StringTokenizer tokenizer = new StringTokenizer(line);
         // Random 給4中心點
         centerValue.add(20);
         centerValue.add(30);
@@ -30,12 +34,6 @@ public class Kmeans {
         centerID.add("K2");
         centerID.add("K3");
         centerID.add("K4");
-    }
-
-    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        String line = value.toString();
-        StringTokenizer tokenizer = new StringTokenizer(line);
-
         while(tokenizer.hasMoreTokens()){
             String column1 = tokenizer.nextToken(); //Date
             String column2 = tokenizer.nextToken(); //Area
