@@ -14,53 +14,43 @@ public class Kmeans {
 
  public static class KM_Map extends Mapper<LongWritable, Text, Text, IntWritable> {
 
-    protected void setup(Context context) throws IOException, InterruptedException{
-     // Random 給4中心點 & 群中心ID
-    HashMap<String, Integer> map_4k = new HashMap<String, Integer>();
-    map_4k.put("K1", 20);
-    map_4k.put("K2", 30);
-    map_4k.put("K3", 50);
-    map_4k.put("K4", 70);
-
-    HashMap<String, List> Kx_values = new HashMap<String, List>();
-  }
-
-   // private List<String> centerID = new ArrayList<>();
+    private List<String> centerID = new ArrayList<>();
     private List<Integer> centerValue = new ArrayList<>();
 
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String line = value.toString();
         StringTokenizer tokenizer = new StringTokenizer(line);
-        
+ 
+
+        // 群ID
+        centerID.add("K1");
+        centerID.add("K2");
+        centerID.add("K3");
+        centerID.add("K4");
+        // 隨機4中心
+        centerValue.add(20);
+        centerValue.add(30);
+        centerValue.add(50);
+        centerValue.add(70);
+
         while(tokenizer.hasMoreTokens()){
-            String token = tokenizer.nextToken();
-            int new_value = Integer.parseInt(token);
+            String column1 = tokenizer.nextToken(); // Date
+            String column2 = tokenizer.nextToken(); // Dali
+            String column3 = tokenizer.nextToken(); //PM2.5
+
+            int new_value = Integer.parseInt(column3);
             List<Double> list_distance = new ArrayList<>();
 
-            Set<String> keySet = map_4k.keySet();
             // 第一個值和 K1,2,3,4 算距離找最小
-            for(String id : keySet){ 
-                double distance = Math.abs(new_value - map_4k.get(id));
+            for(int i = 0;i< centerValue.size();i++){ 
+                double distance = Math.abs(new_value - centerValue.get(i));
                 list_distance.add(distance);
             }
             // 找出最近中心點並分類
-            for(String id : keySet){
-                if(Collections.min(list_distance) == Math.abs(new_value - map_4k.get(id))){
-                    centerValue.add(new_value);
-                    Kx_values.put(id, centerValue);
+            for(int i= 0;i< centerValue.size();i++){
+                if(Collections.min(list_distance) == Math.abs(new_value - centerValue.get(id))){
+                    context.write(new Text(centerID.get(i)), new IntWritable(new_value));
                 }
-            }
-        }
-    }
-
-    protected void cleanup(Context context) throws IOException, InterruptedException{
-        Set<String> keySet2 = Kx_values.keySet();
-        List<Integer> values = new ArrayList<>();
-
-        for(String id : keySet2){
-            values = Kx_values.get(id);
-            for(int i= 0; i< values.size(); i++){
-                context.write(new Text(id), new IntWritable(i));
             }
         }
     }
