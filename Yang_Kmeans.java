@@ -21,7 +21,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class Kmeans {
 
-/*
+
     public static class DefultMap extends Mapper<LongWritable, Text, Text, IntWritable> {
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             // 每一行取一筆
@@ -62,7 +62,7 @@ public class Kmeans {
             }
         }
     }
-*/
+
 
 
  public static class KMap extends Mapper<LongWritable, Text, Text, IntWritable> {
@@ -93,8 +93,11 @@ public class Kmeans {
         //centroValue.add(Integer.parseInt(conf.get("k4")));
 
         while (tokenizer.hasMoreTokens()) {
-            String token = tokenizer.nextToken(); 
-            int new_value = Integer.parseInt(token);
+            String token1 = tokenizer.nextToken(); 
+            String token2= tokenizer.nextToken(); 
+            String token3 = tokenizer.nextToken(); 
+
+            int new_value = Integer.parseInt(token3);
 
             List<Double> list_distances = new ArrayList<>();
 
@@ -157,7 +160,7 @@ public class Kmeans {
         job.setOutputFormatClass(TextOutputFormat.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
-        job.waitForCompletion(true);*/
+        job.waitForCompletion(true);
 
         // 使用KMap，KReduce取得temp中心點後
         // 在KMap分群,在KReduce重新計算群中心
