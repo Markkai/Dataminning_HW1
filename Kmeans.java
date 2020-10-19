@@ -10,9 +10,10 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+boolean flag = true;
+HashMap<String, Integer> 4K = new HashMap<String, Integer>();
 public class Kmeans {
- boolean flag = true;
- HashMap<String, Integer> 4K = new HashMap<String, Integer>();
+
 
  public List Fir_cent(){
     List(Integer) centerValue = new ArrayList();
