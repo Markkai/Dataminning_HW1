@@ -10,9 +10,6 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-
-
-
 public class Kmeans {
 
  public List Fir_cent(){
@@ -25,7 +22,6 @@ public class Kmeans {
     flag = false;
     return centerValue;
  }
-
 
  public static class KM_Map extends Mapper<LongWritable, Text, Text, IntWritable> {
     private List<String> centerID = new ArrayList<>();
@@ -43,10 +39,6 @@ public class Kmeans {
         centerID.add("K4");
 
         if(flag == true){
-            4K.put("K1", 20);
-            4K.put("K2", 30);
-            4K.put("K3", 50);
-            4K.put("K4", 70);
             centerValue = Fir_cent();
         }
 
@@ -75,6 +67,13 @@ public class Kmeans {
     private int count = 0;
     public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
         
+        for(IntWritable val : values){
+            sum += val.get();
+            count++
+        }
+        context.write(key, new IntWritable(sum/count));
+
+        /*
         if(key == "K1"){
             for (IntWritable val : values) {
             sum += val.get();
@@ -112,7 +111,7 @@ public class Kmeans {
             4K.put("K4", new_cent);
         }
         System.out.println(4K);
-        context.write(key, new IntWritable(sum/count));
+        */
     }
  }
 
@@ -147,7 +146,7 @@ public static class SortReduce extends Reducer<IntWritable, Text, IntWritable, T
 public static void main(String[] args) throws Exception {
 
     boolean flag = true;
-    HashMap<String, Integer> 4K = new HashMap<String, Integer>();
+    
 
     Configuration conf = new Configuration();                                                                                                                                
     Job job = new Job(conf, "Kmeans");
