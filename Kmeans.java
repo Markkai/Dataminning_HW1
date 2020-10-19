@@ -34,10 +34,6 @@ public class Kmeans {
         centerID.add("K3");
         centerID.add("K4");
 
-        if(flag == true){
-            centerValue = Fir_cent();
-        }
-
         while(tokenizer.hasMoreTokens()){
             String token = tokenizer.nextToken();
             int new_value = Integer.parseInt(token);
