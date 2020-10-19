@@ -16,7 +16,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 public class Kmeans {
 
  public List Fir_cent(){
-    List(Integer) centerValue = new ArrayList();
+    List<Integer> centerValue = new ArrayList<>();
     // Random 給4中心點
     centerValue.add(20);
     centerValue.add(30);
@@ -29,7 +29,7 @@ public class Kmeans {
 
  public static class KM_Map extends Mapper<LongWritable, Text, Text, IntWritable> {
     private List<String> centerID = new ArrayList<>();
-    private List(Integer) centerValue = new ArrayList();
+    private List<Integer> centerValue = new ArrayList<>();
 
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String line = value.toString();
