@@ -16,11 +16,6 @@ public class Kmeans {
     private List<String> centerID = new ArrayList<>();
     private List<Integer> centerValue = new ArrayList<>();
 
-    // public void setup(Mapper<LongWritable, Text, Text, IntWritable>.Contex contex) throws IOException, InterruptedException{
-
-
-    // }
-
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String line = value.toString();
         StringTokenizer tokenizer = new StringTokenizer(line);
@@ -36,10 +31,8 @@ public class Kmeans {
         centerID.add("K4");
         while(tokenizer.hasMoreTokens()){
             String column1 = tokenizer.nextToken(); //Date
-            String column2 = tokenizer.nextToken(); //Area
-            String column3 = tokenizer.nextToken(); //PM25
 
-            int new_value = Integer.parseInt(column3);
+            int new_value = Integer.parseInt(column1);
             List<Double> list_distance = new ArrayList<>();
             
             // 算距離
@@ -104,9 +97,6 @@ public static void main(String[] args) throws Exception {
         job.waitForCompletion(true);
 
     }
-
-
-
   }
 }
 
