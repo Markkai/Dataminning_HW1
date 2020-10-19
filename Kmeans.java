@@ -10,10 +10,10 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-boolean flag = true;
-HashMap<String, Integer> 4K = new HashMap<String, Integer>();
-public class Kmeans {
 
+
+
+public class Kmeans {
 
  public List Fir_cent(){
     List(Integer) centerValue = new ArrayList();
@@ -145,6 +145,10 @@ public static class SortReduce extends Reducer<IntWritable, Text, IntWritable, T
 
 
 public static void main(String[] args) throws Exception {
+
+    boolean flag = true;
+    HashMap<String, Integer> 4K = new HashMap<String, Integer>();
+
     Configuration conf = new Configuration();                                                                                                                                
     Job job = new Job(conf, "Kmeans");
 
