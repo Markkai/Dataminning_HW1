@@ -69,7 +69,7 @@ public class Kmeans {
         
         for(IntWritable val : values){
             sum += val.get();
-            count++
+            count++;
         }
         context.write(key, new IntWritable(sum/count));
 
