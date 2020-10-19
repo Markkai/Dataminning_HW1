@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class Kmeans {
  boolean flag = true;
- HashMap<String, Integer> 4K = new HashMapM();
+  HashMap<String, Integer> 4K = new HashMap<String, Integer>();
 
  public List Fir_cent(){
     List(Integer) centerValue = new ArrayList();
