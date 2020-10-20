@@ -1,2 +1,3 @@
 # Dataminning_HW1
 Kmeans_MapReduce
+將大里區整年PM2.5資料用Kmeans分4群，輸出計算30次之後的4群群中心
