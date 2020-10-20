@@ -81,18 +81,9 @@ public class Kmeans {
         }       
         
     }
-
-    public void cleanup(Context context) throws IOException, InterruptedException{
-
-    }
-
  }
 
  public static class KReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
-
-    public void setup(Context context) {
-
-    }
 
     public void reduce(Text key, Iterable<IntWritable> values, Context context)
       throws IOException, InterruptedException {
@@ -105,10 +96,6 @@ public class Kmeans {
         int new_value = sum/count;
         //得到該類別的中心點
         context.write(key, new IntWritable(new_value));
-    }
-
-    public void cleanup(Context context) throws IOException, InterruptedException{
-
     }
 
  }
@@ -130,9 +117,9 @@ public class Kmeans {
     conf.set(flag2, isFisrt);
 
     Job job1 = new Job(conf, "kmeans"); 
-//     job1.setSpeculativeExecution(false);
-//     job1.setMapSpeculativeExecution(false);
-//     job1.setReduceSpeculativeExecution(false);
+    // job1.setSpeculativeExecution(false);
+    // job1.setMapSpeculativeExecution(false);
+    // job1.setReduceSpeculativeExecution(false);
 
     FileSystem hdfs = FileSystem.get(conf);
     if (hdfs.exists(outputFile)) {
