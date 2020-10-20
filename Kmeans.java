@@ -188,6 +188,7 @@ public class Kmeans {
         System.out.println(oldCenterValues);
 
         repeated++;
+        System.out.println("Generation: " + repeated);
 
     }while(repeated < 30);
     
