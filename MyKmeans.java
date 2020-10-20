@@ -18,7 +18,7 @@ public class MyKmeans {
 
     public void setup(Context context){
         String sCounter = context.getConfiguration().get("COUNTER"); //isFirst == 0
-        int nCounter = Intrger.parseInt(sCounter);
+        int nCounter = Integer.parseInt(sCounter);
         if(nCounter == 1){
             // flag1 = oldCentVals(/part-r-00000)
             String new_center = context.getConfiguration().get("NEW_CENTER"); 
@@ -102,7 +102,7 @@ public static void main(String[] args) throws Exception {
     conf.set(flag2, isFirst);                                                                                                                         
     Job job1 = new Job(conf, "Kmeans");
 
-    Filesystem hdfs = Filesystem.get(conf);
+    FileSystem hdfs = FileSystem.get(conf);
     if(hdfs.exists(outputfile)){
         hdfs.delete(outputfile, true);
     }
@@ -124,7 +124,7 @@ public static void main(String[] args) throws Exception {
     int repeated = 0;
     do{
         
-        Center center = new center();
+        Center center = new Center();
         String oldCentVals = center.preCenter(new Path(outputfile + filename));
         System.out.println(oldCentVals);
 
@@ -150,7 +150,7 @@ public static void main(String[] args) throws Exception {
         FileOutputFormat.setOutputPath(job, outputfile);
         job.waitForCompletion(true);
 
-        center = new center();
+        center = new Center();
         oldCentVals = center.NewCenter(outputFile);
         System.out.println(oldCentVals);
 
