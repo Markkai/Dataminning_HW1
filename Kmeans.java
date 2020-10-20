@@ -130,9 +130,9 @@ public class Kmeans {
     conf.set(flag2, isFisrt);
 
     Job job1 = new Job(conf, "kmeans"); 
-    job1.setSpeculativeExecution(false);
-    job1.setMapSpeculativeExecution(false);
-    job1.setReduceSpeculativeExecution(false);
+//     job1.setSpeculativeExecution(false);
+//     job1.setMapSpeculativeExecution(false);
+//     job1.setReduceSpeculativeExecution(false);
 
     FileSystem hdfs = FileSystem.get(conf);
     if (hdfs.exists(outputFile)) {
