@@ -8,7 +8,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.util.LineReader;
 
-public class Center {
+public class center {
 
 	public String preCenter(Path path) throws IOException{
 		StringBuffer sBuffer = new StringBuffer();
